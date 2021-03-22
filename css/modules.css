@@ -1,0 +1,22 @@
+h1 {
+  font-size: 5em;
+}
+
+select {
+  font-family: 'Abel', sans-serif;
+  font-size: 1.25em;
+  font-weight: bold;
+  outline: none;
+  color: darkcyan;
+  border: solid 2px darkcyan;
+}
+
+h2 {
+  padding: 10px;
+  font-size: 3em;
+}
+
+p {
+  padding: 5px;
+  font-size: 1.5em;
+}

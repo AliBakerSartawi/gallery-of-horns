@@ -1,0 +1,20 @@
+body,
+html {
+  box-sizing: border-box;
+  width: 1000px;
+  margin: auto;
+
+  font-family: 'Berkshire Swash', cursive;
+
+  background-color: whitesmoke;
+  color:darkcyan;
+}
+h2,
+p {
+  font-family: 'Abel', sans-serif;
+  font-weight: bold;
+}
+
+footer {
+  clear: both;
+}
