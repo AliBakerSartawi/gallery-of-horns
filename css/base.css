@@ -1,14 +1,20 @@
-body,
 html {
-  box-sizing: border-box;
-  width: 1000px;
-  margin: auto;
-
-  font-family: 'Berkshire Swash', cursive;
-
-  background-color: whitesmoke;
-  color:darkcyan;
+  background-color: #141516;
 }
+
+body {
+  box-sizing: border-box;
+  margin: auto;
+  background-color: #1E2021;
+  width: 1000px;
+  
+  font-family: 'Berkshire Swash', cursive;
+  
+  /* background-color: whitesmoke; */
+  color:darkcyan;
+  color: #6BFFFF;
+}
+
 h2,
 p {
   font-family: 'Abel', sans-serif;

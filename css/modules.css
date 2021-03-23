@@ -2,13 +2,29 @@ h1 {
   font-size: 5em;
 }
 
-select {
+#sort-section {
+  font-family: 'Abel', sans-serif;
+  font-size: 1.5em;
+  font-weight: bold;
+}
+
+select,
+button {
   font-family: 'Abel', sans-serif;
   font-size: 1.25em;
   font-weight: bold;
   outline: none;
   color: darkcyan;
-  border: solid 2px darkcyan;
+  border: solid 2px lightcyan;
+  transition: 200ms ease-in-out;
+}
+select:hover,
+select:focus,
+button:hover {
+  background-color: darkcyan;
+  color: lightcyan;
+  border: solid 2px #6BFFFF;
+  transition: 200ms ease-in-out;
 }
 
 h2 {

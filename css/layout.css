@@ -1,19 +1,28 @@
 header {
-  margin-top: 50px;
+  padding-top: 50px;
   text-align: center;
 }
 
-select {
+#sort-section {
+  padding-top: 50px;
+}
+
+select,
+button {
   font-size: 1em;
   padding: 5px;
   margin: 30px;
 }
 
+main {
+  display: flex;
+  flex-wrap: wrap;
+}
+
 .animal {
   width: 300px;
-  height: 500px;
+  height: auto;
   margin: 15px;
-  float: left;
 
   text-align: center;
 }
