@@ -20,23 +20,34 @@
     
     <header>
       <h1>The Gallery of Horns</h1>
-      <select>
-        <option value="default" id="filter" class="option">Filter by Keyword</option>
+      <select id="select-filter">
+        <option value="default" id="default" class="option">Filter by Keyword</option>
+        <template id="filter-template" type="text/x-tmpl-mustache">
+          <option value="{{keyword}}" id="{{title}}" class="option filter">{{keyword}}</option>
+        </template>
       </select>
+      <br>
+      <button id="page-one">PAGE 1</button>
+      <button id="page-two">PAGE 2</button>
     </header>
     
     <main>
-      <section id="photo-template">
-        <h2></h2>
-        <img src="" alt="">
-        <p></p>
-      </section>
+
+      <template id="photo-mustache-template" type="text/x-tmpl-mustache">
+        <section id="{{title}}" class="animal {{page}} {{keyword}}">
+          <h2>{{title}}</h2>
+          <img src="{{image_url}}" alt="">
+          <p>{{description}}</p>
+        </section>
+      </template>
+
     </main>
     
     <footer>
       &copy; 2018 Code Fellows
     </footer>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://unpkg.com/mustache@latest"></script>
     <script src="./js/app.js"></script>
   </body>
 </html>

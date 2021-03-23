@@ -2,13 +2,22 @@ h1 {
   font-size: 5em;
 }
 
-select {
+select,
+button {
   font-family: 'Abel', sans-serif;
   font-size: 1.25em;
   font-weight: bold;
   outline: none;
   color: darkcyan;
   border: solid 2px darkcyan;
+  transition: 200ms ease-in-out;
+}
+select:hover,
+select:focus,
+button:hover {
+  background-color: darkcyan;
+  color: lightcyan;
+  transition: 200ms ease-in-out;
 }
 
 h2 {
