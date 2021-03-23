@@ -80,7 +80,7 @@ Number and name of feature: 4 Sort the images
 
 Estimate of time needed to complete: 1 hour
 
-Start time: _____
+Start time: 06:45
 
 Finish time: _____
 

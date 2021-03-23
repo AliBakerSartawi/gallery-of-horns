@@ -1,5 +1,10 @@
 'use strict';
 
+////// global variables
+Unicorn.all = [];
+let unicornPageOne = [];
+let unicornPageTwo = [];
+
 //////// Constructor
 function Unicorn(unicorn) {
   this.title = unicorn.title;
@@ -9,51 +14,30 @@ function Unicorn(unicorn) {
   this.horns = unicorn.horns;
   Unicorn.all.push(this);
 }
-Unicorn.all = [];
 
+//////// render image
 Unicorn.prototype.renderImage = function() {
-  // const templateClone = $('#photo-template').clone();
-  // templateClone.find('h2').text(this.title);
-  // templateClone.find('p').text(this.description);
-  // templateClone.find('img').attr('src', this.image_url);
-  // templateClone.removeAttr('id', '#photo-template').attr('id', this.title);
-  // templateClone.attr('class', `animal ${this.keyword}`);
-  // $('main').append(templateClone);
-
   let templatePhoto = $('#photo-mustache-template').html();
   let html = Mustache.render(templatePhoto, this);
   $('main').append(html);
 };
 
-// Unicorn.prototype.renderFilter = function(pageNum) {
-//   let preventRepeat = 1;
-//   Unicorn.all.forEach(element => {
-//     if (element.keyword === this.keyword && element.page === pageNum){
-//       preventRepeat --;
-//       // console.log(preventRepeat);
-//     }
-//   });
-//   if (preventRepeat === 0){
-//     const optionClone = $('#filter').clone();
-//     optionClone.removeAttr('id', 'filter');
-//     optionClone.attr('class', 'option filter');
-//     optionClone.removeAttr('value', 'default').attr('value', `${this.keyword}`);
-//     optionClone.text(this.keyword);
-//     $('#filter').after(optionClone);
-//   }
-// };
+//////// render filter
+Unicorn.prototype.renderFilter = function(filterPageArr) {
+  let preventRepeat = 1;
 
-Unicorn.prototype.renderFilter = function() {
-  // const optionClone = $('#filter').clone();
-  // optionClone.removeAttr('id', 'filter');
-  // optionClone.attr('class', `option filter`);
-  // optionClone.removeAttr('value', 'default').attr('value', `${this.keyword}`);
-  // optionClone.text(this.keyword);
-  // $('#filter').after(optionClone);
-
-  let templateFilter = $('#filter-template').html();
-  let html = Mustache.render(templateFilter, this);
-  $('#select-filter').append(html);
+  filterPageArr.forEach(element => {
+    if (element.keyword === this.keyword){
+      preventRepeat --;
+      // console.log(preventRepeat);
+    }
+  });
+  // console.log(preventRepeat);
+  if (preventRepeat === 0){
+    let templateFilter = $('#filter-template').html();
+    let html = Mustache.render(templateFilter, this);
+    $('#select-filter').append(html);
+  }
 };
 
 //////// ajax
@@ -62,64 +46,32 @@ const ajaxSettings = {
   dataType: 'json',
 };
 
-// $.ajax('data/page-1.json', ajaxSettings).then((data) => {
-//   data.forEach(unicorn => {
-//     let unicornObject = new Unicorn(unicorn);
-//     // add page property
-//     unicornObject.page = 1;
-//     console.log('page', unicornObject.page);
-
-//     //populate window with images
-//     unicornObject.renderImage();
-//     unicornObject.renderFilter();
-//   });
-// });
-
-function ajaxAndRender(url, pageNum, renderOrNot) {
-  $.ajax(url, ajaxSettings).then((data) => {
+function ajaxAndRender(url, pageNum, filterPageArr, renderOrNot) {
+  $.ajax(url, ajaxSettings).then(data => {
     data.forEach(unicorn => {
       let unicornObject = new Unicorn(unicorn);
       // add page property
       unicornObject.page = pageNum;
-      console.log('page', unicornObject.page);
+
+      /////splitting into two arrays after rendering
+      if (unicornObject.page === 1){
+        unicornPageOne.push(unicornObject);
+      } else {
+        unicornPageTwo.push(unicornObject);
+      }
 
       //populate window and filter with images
       if (renderOrNot === true){
         unicornObject.renderImage();
-        unicornObject.renderFilter();
+        unicornObject.renderFilter(filterPageArr);
       }
     });
   });
 }
 
-//////// initial rendering on load, and instantiating objects for both pages
-ajaxAndRender('data/page-1.json', 1, true);
-ajaxAndRender('data/page-2.json', 2, false);
-
-//////// page selection event
-function pageChange(pageNum) {
-  ////remove images and filters
-  $('.animal').remove();
-  $('.filter').remove();
-  Unicorn.all.forEach(element => {
-    if (element.page === pageNum){
-      element.renderImage();
-      element.renderFilter();
-    }
-  });
-  console.log(Unicorn.all);
-}
-$('#page-one').click(function() {
-  pageChange(1);
-});
-$('#page-two').click(function() {
-  pageChange(2);
-});
-
-
 //////// filter selection event
 $('select').change(function() {
-  console.log(this.value);
+  // console.log(this.value);
   Unicorn.all.forEach(element => {
     if ('default' === this.value){
       $(`.${element.keyword}`).show();
@@ -131,3 +83,85 @@ $('select').change(function() {
   });
 });
 
+
+//////// page selection event
+function pageChange(pageNum, filterPageArr) {
+  ////remove images and filters
+  $('.animal').remove();
+  $('.filter').remove();
+  // Unicorn.all.forEach(element => {
+  //   console.log(element.page);
+  //   if (element.page === pageNum){
+  //     console.log(element.page);
+  //     element.renderImage();
+  //     element.renderFilter(filterPageArr);
+  //   }
+  // });
+  filterPageArr.forEach(element => {
+    element.renderImage();
+    element.renderFilter(filterPageArr);
+  });
+}
+$('#page-one').click(function() {
+  pageChange(1, unicornPageOne);
+});
+$('#page-two').click(function() {
+  pageChange(2, unicornPageTwo);
+});
+
+
+
+///////title sorting function
+console.log(unicornPageOne);
+
+
+unicornPageOne.sort((a, b) => {
+  let fa = a.title.toLowerCase();
+  let fb = b.title.toLowerCase();
+  console.log(unicornPageOne);
+
+  if (fa < fb) {
+    return -1;
+  }
+  if (fa > fb) {
+    return 1;
+  }
+  return 0;
+});
+
+/////// sorting test, works fine
+let testArr = [
+  {number: 3},
+  {number: 6},
+  {number: 17},
+];
+// console.log(testArr);
+testArr.sort((a, b) => {
+  let fa = a.horns;
+  let fb = b.horns;
+  // console.log(testArr);
+
+  if (fa < fb) {
+    return -1;
+  }
+  if (fa > fb) {
+    return 1;
+  }
+  return 0;
+});
+
+
+///////// sorting radio buttons
+// if ($('#by-title').is(':checked')) {
+//   initial sorting here
+// }
+
+$('#by-title').click(function() {
+  if ($(this).is(':checked')) {
+    alert('wow');
+  }
+});
+
+//////// initial rendering on load, and instantiating objects for both pages
+ajaxAndRender('data/page-1.json', 1, unicornPageOne, true);
+ajaxAndRender('data/page-2.json', 2, unicornPageTwo, false);
