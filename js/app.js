@@ -68,6 +68,9 @@ function ajaxAndRender(url, pageNum, filterPageArr, renderOrNot) {
     });
   });
 }
+//////// initial rendering on load, and instantiating objects for both pages
+ajaxAndRender('data/page-1.json', 1, unicornPageOne, true);
+ajaxAndRender('data/page-2.json', 2, unicornPageTwo, false);
 
 //////// filter selection event
 $('select').change(function() {
@@ -153,7 +156,7 @@ testArr.sort((a, b) => {
 
 ///////// sorting radio buttons
 // if ($('#by-title').is(':checked')) {
-//   initial sorting here
+//   alert('wow');
 // }
 
 $('#by-title').click(function() {
@@ -162,6 +165,3 @@ $('#by-title').click(function() {
   }
 });
 
-//////// initial rendering on load, and instantiating objects for both pages
-ajaxAndRender('data/page-1.json', 1, unicornPageOne, true);
-ajaxAndRender('data/page-2.json', 2, unicornPageTwo, false);
