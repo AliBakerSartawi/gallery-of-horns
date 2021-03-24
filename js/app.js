@@ -4,7 +4,8 @@
 Unicorn.all = [];
 let unicornPageOne = [];
 let unicornPageTwo = [];
-let pageNumber = 0;
+let noRepeatFilterArr = [];
+let pageNumber = 1;
 
 //////// Constructor
 function Unicorn(unicorn) {
@@ -25,16 +26,9 @@ Unicorn.prototype.renderImage = function() {
 
 //////// render filter
 Unicorn.prototype.renderFilter = function(pageArr) {
-  let preventRepeat = 1;
 
-  pageArr.forEach(element => {
-    if (element.keyword === this.keyword){
-      preventRepeat --;
-      // console.log(preventRepeat);
-    }
-  });
-  // console.log(preventRepeat);
-  if (preventRepeat === 0){
+  if (!noRepeatFilterArr.includes(this.keyword)) {
+    noRepeatFilterArr.push(this.keyword);
     let templateFilter = $('#filter-template').html();
     let html = Mustache.render(templateFilter, this);
     $('#select-filter').append(html);
@@ -97,6 +91,7 @@ function pageOrSortChange(pageArr, pageNum) {
   ////remove images and filters
   $('.animal').remove();
   $('.filter').remove();
+  noRepeatFilterArr = [];
 
   pageArr.forEach(element => {
     element.renderImage();
@@ -119,9 +114,10 @@ function defaultButtonCheck() {
   $('#by-title').prop('checked', true);
   if ($('#by-title').is(':checked')) {
     if (pageNumber === 1){
-      console.log('check');
+      console.log(pageNumber);
       sortArrByTitle(unicornPageOne);
       pageOrSortChange(unicornPageOne, 1);
+      console.log('check');
     } else {
       sortArrByTitle(unicornPageTwo);
       pageOrSortChange(unicornPageTwo, 2);
