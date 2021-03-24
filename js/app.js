@@ -25,7 +25,7 @@ Unicorn.prototype.renderImage = function() {
 };
 
 //////// render filter
-Unicorn.prototype.renderFilter = function(pageArr) {
+Unicorn.prototype.renderFilter = function() {
 
   if (!noRepeatFilterArr.includes(this.keyword)) {
     noRepeatFilterArr.push(this.keyword);
@@ -55,12 +55,15 @@ function ajaxAndRender(url, pageNum, pageArr, renderOrNot) {
         unicornPageTwo.push(unicornObject);
       }
 
-      //populate window and filter with images
-      if (renderOrNot === true){
-        unicornObject.renderImage();
-        unicornObject.renderFilter(pageArr);
-      }
     });
+    //populate window and filter with images
+    if (renderOrNot === true){
+      sortArrByTitle(pageArr);
+      pageArr.forEach(element => {
+        element.renderImage();
+        element.renderFilter();
+      });
+    }
   });
   pageNumber = 1;
 }
