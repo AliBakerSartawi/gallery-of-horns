@@ -102,7 +102,9 @@ function pageOrSortChange(pageArr, pageNum) {
     element.renderImage();
     element.renderFilter(pageArr);
   });
+  console.log('before', pageNumber);
   pageNumber = pageNum;
+  console.log('after', pageNumber);
 }
 $('#page-one').click(function() {
   pageOrSortChange(unicornPageOne, 1);
@@ -119,22 +121,24 @@ function defaultButtonCheck() {
     if (pageNumber === 1){
       console.log('check');
       sortArrByTitle(unicornPageOne);
-      pageOrSortChange(unicornPageOne);
+      pageOrSortChange(unicornPageOne, 1);
     } else {
       sortArrByTitle(unicornPageTwo);
-      pageOrSortChange(unicornPageTwo);
+      pageOrSortChange(unicornPageTwo, 2);
     }
   }
 }
 
 $('#by-title').click(function() {
   if ($(this).is(':checked')) {
+    console.log(pageNumber);
     if (pageNumber === 1){
       sortArrByTitle(unicornPageOne);
-      pageOrSortChange(unicornPageOne);
-    } else {
+      pageOrSortChange(unicornPageOne, 1);
+    } 
+    if (pageNumber === 2) {
       sortArrByTitle(unicornPageTwo);
-      pageOrSortChange(unicornPageTwo);
+      pageOrSortChange(unicornPageTwo, 2);
     }
   }
 });
@@ -143,7 +147,7 @@ function sortArrByTitle(pageArr){
   pageArr.sort((a, b) => {
     let fa = a.title.toLowerCase();
     let fb = b.title.toLowerCase();
-    console.log(pageArr);
+    // console.log(pageArr);
 
     if (fa < fb) {
       return -1;
@@ -157,12 +161,14 @@ function sortArrByTitle(pageArr){
 
 $('#by-horn').click(function() {
   if ($(this).is(':checked')) {
+    console.log(pageNumber);
     if (pageNumber === 1){
       sortArrByHorn(unicornPageOne);
-      pageOrSortChange(unicornPageOne);
-    } else {
+      pageOrSortChange(unicornPageOne, 1);
+    } 
+    if (pageNumber ===2) {
       sortArrByHorn(unicornPageTwo);
-      pageOrSortChange(unicornPageTwo);
+      pageOrSortChange(unicornPageTwo, 2);
     }
   }
 });
